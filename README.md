@@ -1,9 +1,15 @@
-# calculator
+# Basic Calculator App
 
 Simple and basic calculator implemented using Vue 3 + Typescript and Pinia.
+It has been used [create-vue](https://github.com/vuejs/create-vue) to scaffold Vite-based projects.
+It has been added Typescript, Pinia for the state management, ESLint and Prettier.
+
+At last, it has been used Sass and BEM methodology for the Vue components.
 
 ## Usage
-Enter one number, set an operator, enter another number and press "=" to get the result of the operation.
+
+The operators allowed are '+', '-', '*' and '/'.
+Enter one number, set an operator, enter another number, and press "=" to get the result of the operation.
 
 ## Recommended IDE Setup
 
