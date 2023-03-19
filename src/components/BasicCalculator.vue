@@ -13,7 +13,7 @@
         class="calculator__keys__item"
         :class="[
           `calculator__keys__item--${calculatorKey.type}`,
-          { 'calculator__keys__item--operator--active': isOperatorActive(calculatorKey.value) }
+          { 'calculator__keys__item--operator--active': isOperatorActive(calculatorKey) }
         ]"
         @click="handleKey(calculatorKey)"
       >
@@ -28,6 +28,7 @@ import { defineComponent } from 'vue';
 import { useCalculatorStore } from '@/stores/calculator';
 import { storeToRefs } from 'pinia';
 import { CalculatorKeyType } from '@/enums/calculator-key-type';
+import { Operator } from '@/enums/operator';
 
 interface CalculatorKey {
   value: number | string;
@@ -76,8 +77,17 @@ export default defineComponent({
       }
     }
 
-    function isOperatorActive(value: number | string): boolean {
-      return calculatorStore.currentValue === '' && value === calculatorStore.operator;
+    function isOperatorActive(calculatorKey: CalculatorKey): boolean {
+      if (
+        calculatorKey.type !== CalculatorKeyType.OPERATOR ||
+        calculatorKey.value === Operator.EQUAL
+      ) {
+        return false;
+      }
+
+      return (
+        calculatorStore.currentValue === '' && calculatorKey.value === calculatorStore.operator
+      );
     }
 
     return {
