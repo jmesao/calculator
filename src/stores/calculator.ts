@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Operator } from '@/enums/operator';
+import { Operator, operators } from '@/enums/operator';
 
 export interface CalculatorState {
   displayValue: string;
@@ -50,25 +50,19 @@ export const useCalculatorStore = defineStore({
       this.operator = operator;
     },
     calculate(): void {
-      if (this.currentValue !== '' && this.previousValue !== '') {
-        let result = 0;
+      if (this.currentValue !== '' && this.previousValue !== '' && this.operator) {
+        if (this.operator === Operator.DIVIDE && this.currentValue === '0') {
+          this.displayValue = 'Error';
+          this.reset();
 
-        if (this.operator === Operator.ADD) {
-          result = parseFloat(this.previousValue) + parseFloat(this.currentValue);
-        } else if (this.operator === Operator.SUBTRACT) {
-          result = parseFloat(this.previousValue) - parseFloat(this.currentValue);
-        } else if (this.operator === Operator.MULTIPLY) {
-          result = parseFloat(this.previousValue) * parseFloat(this.currentValue);
-        } else if (this.operator === Operator.DIVIDE) {
-          if (this.currentValue === '0') {
-            this.displayValue = 'Error';
-            this.reset();
-
-            throw new Error('Cannot divide by zero');
-          }
-
-          result = parseFloat(this.previousValue) / parseFloat(this.currentValue);
+          throw new Error('Cannot divide by zero');
         }
+
+        const result = operators[this.operator](
+          parseFloat(this.previousValue),
+          parseFloat(this.currentValue)
+        );
+
         this.currentValue = result.toString();
         this.displayValue = this.currentValue;
         this.previousValue = '';
