@@ -6,6 +6,8 @@ It has been added Typescript, Pinia for the state management, ESLint and Prettie
 
 At last, it has been used Sass and BEM methodology for the Vue components.
 
+It has been added as well a pull request template...
+
 ## Usage
 
 The operators allowed are '+', '-', '*' and '/'.
